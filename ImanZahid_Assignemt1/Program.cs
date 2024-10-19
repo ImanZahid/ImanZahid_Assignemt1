@@ -1,9 +1,22 @@
+using BLL.DAL;
+using BLL.Interfaces;
+using BLL.Models;
+using BLL.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=StudentsDB;Trusted_Connection=True;";
+
+builder.Services.AddDbContext<DB>(options => options.UseSqlServer(connectionString));
+builder.Services.AddScoped<IStudentService, StudentService>();
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
